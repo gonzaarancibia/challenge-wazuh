@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   EuiPanel,
   EuiTitle,
   EuiSpacer,
   EuiFlexGroup,
   EuiFlexItem,
+  EuiLoadingContent
 } from '@elastic/eui';
 import { Chart, Settings, Partition, BarSeries, Axis, ScaleType } from '@elastic/charts';
 import { useTodos } from '../../../hooks/useTodos';
@@ -15,9 +16,13 @@ interface TodoChartProps {
   http: CoreStart['http'];
 }
 
-export const TodoChart: React.FC<TodoChartProps> = ({ http }) => {
-  const { todos } = useTodos(http);
-  const { statusStats, timelineData } = useChartData(todos);
+export const TodoChart: React.FC<TodoChartProps> = memo(({ http }) => {
+  const { todos, loading } = useTodos(http);
+  const { statusStats, timelineData, tagStats } = useChartData(todos);
+
+  if (loading) {
+    return <EuiLoadingContent lines={3} />;
+  }
 
   return (
     <EuiPanel>
@@ -74,6 +79,39 @@ export const TodoChart: React.FC<TodoChartProps> = ({ http }) => {
           </Chart>
         </EuiFlexItem>
       </EuiFlexGroup>
+      <EuiSpacer />
+      <EuiFlexGroup>
+        <EuiFlexItem>
+          <EuiTitle size="xs">
+            <h3>Tag Distribution</h3>
+          </EuiTitle>
+          <Chart size={{ height: 300 }}>
+            <Settings
+              rotation={90}
+              showLegend={false}
+            />
+            <BarSeries
+              id="tags"
+              name="Tags Distribution"
+              data={[...tagStats].sort((a, b) => b.count - a.count)}
+              xAccessor="tag"
+              yAccessors={['count']}
+              xScaleType={ScaleType.Ordinal}
+              yScaleType={ScaleType.Linear}
+            />
+            <Axis
+              id="bottom-axis"
+              position="left"
+              gridLine={{ visible: false }}
+            />
+            <Axis
+              id="left-axis"
+              position="bottom"
+              tickFormat={(d) => Math.round(d).toString()}
+            />
+          </Chart>
+        </EuiFlexItem>
+      </EuiFlexGroup>
     </EuiPanel>
   );
-};
+});

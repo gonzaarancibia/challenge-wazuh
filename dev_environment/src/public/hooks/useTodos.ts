@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { CoreStart } from '../../../../src/core/public';
 import { debounce } from 'lodash';
 
@@ -20,18 +20,37 @@ export const useTodos = (http: CoreStart['http']) => {
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const lastFetchTime = useRef<number>(0);
 
-    const fetchTodos = useCallback(async () => {
+    const fetchTodos = useCallback(async (force = false) => {
+        const now = Date.now();
+        // Prevent multiple fetches within 2 seconds unless forced
+        if (!force && now - lastFetchTime.current < 2000) {
+            return;
+        }
+        
         setLoading(true);
         try {
             const response = await http.get('/api/todo_plugin/todos');
-            setTodos(response.todos);
+            setTodos(prev => {
+                // Only update if data actually changed
+                if (JSON.stringify(prev) !== JSON.stringify(response.todos)) {
+                    return response.todos;
+                }
+                return prev;
+            });
+            lastFetchTime.current = now;
         } catch (error) {
             console.error('Error fetching todos:', error);
         } finally {
             setLoading(false);
         }
     }, [http]);
+
+    // Remove the automatic refresh interval and only fetch when needed
+    useEffect(() => {
+        fetchTodos(true);
+    }, [fetchTodos]);
 
     const updateTodoStatus = useCallback(async (id: string, status: Todo['status']) => {
         try {
@@ -47,7 +66,7 @@ export const useTodos = (http: CoreStart['http']) => {
             await http.post('/api/todo_plugin/todos', {
                 body: JSON.stringify(todo)
             });
-            await fetchTodos();
+            await fetchTodos(); // This will now trigger updates everywhere
         } catch (error) {
             throw new Error('Failed to create todo');
         }
@@ -85,7 +104,7 @@ export const useTodos = (http: CoreStart['http']) => {
     return {
         todos,
         loading,
-        fetchTodos,
+        fetchTodos: () => fetchTodos(true), // Force refresh when manually called
         updateTodoStatus,
         createTodo,
         searchTerm,

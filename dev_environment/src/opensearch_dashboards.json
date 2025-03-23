@@ -4,6 +4,6 @@
   "opensearchDashboardsVersion": "2.16.0",
   "server": true,
   "ui": true,
-  "requiredPlugins": ["navigation", "opensearch"],
+  "requiredPlugins": ["navigation"],
   "optionalPlugins": []
 }

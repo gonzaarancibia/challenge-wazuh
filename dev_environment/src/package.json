@@ -7,5 +7,8 @@
     "plugin-helpers": "node ../../scripts/plugin_helpers",
     "osd": "node ../../scripts/osd",
     "test": "node test/jest"
+  },
+  "dependencies": {
+    "zustand": "^4.4.7"
   }
 }

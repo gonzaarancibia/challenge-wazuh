@@ -19,6 +19,20 @@ export const useChartData = (todos: Todo[]) => {
         }));
     }, [todos]);
 
+    const tagStats = useMemo(() => {
+        const stats = {};
+        todos.forEach(todo => {
+            todo.tags?.forEach(tag => {
+                stats[tag] = (stats[tag] || 0) + 1;
+            });
+        });
+
+        return Object.entries(stats).map(([tag, count]) => ({
+            tag,
+            count,
+        }));
+    }, [todos]);
+
     const timelineData = useMemo(() => {
         const last7Days = [...Array(7)].map((_, i) => {
             const date = new Date();
@@ -35,5 +49,5 @@ export const useChartData = (todos: Todo[]) => {
         }));
     }, [todos]);
 
-    return { statusStats, timelineData };
+    return { statusStats, timelineData, tagStats };
 };
