@@ -8,6 +8,8 @@ import {
   Comparators,
   EuiDescriptionList,
   EuiScreenReaderOnly,
+  EuiSpacer,
+  EuiText
 } from '@elastic/eui';
 import { Todo } from '../../../hooks/useTodos';
 
@@ -145,8 +147,8 @@ const toggleDetails = (todo: Todo) => {
           description: new Date(todo.createdAt).toLocaleString(),
         },
         {
-          title: 'Completed',
-          description: todo.completedAt ? new Date(todo.completedAt).toLocaleString() : 'Not completed',
+          title: 'Status',
+          description: todo.status === "completed" ? "Completed at: " + new Date(todo.completedAt).toLocaleString() : todo.status,
         },
       ];
       itemIdToExpandedRowMapValues[todo.id] = (
@@ -198,7 +200,26 @@ const toggleDetails = (todo: Todo) => {
     [todos, pageIndex, pageSize, sortField, sortDirection]
   );
 
+  const resultsCount =
+  pageSize === 0 ? (
+    <strong>All</strong>
+  ) : (
+    <>
+      <strong>
+        {pageSize * pageIndex + 1}-{pageSize * pageIndex + pageSize}
+      </strong>{' '}
+      of {todos.length}
+    </>
+  );
+
+
   return (
+    <>
+    <EuiSpacer size="s" />
+      <EuiText size="xs">
+        Showing {resultsCount} <strong>Todo</strong>
+      </EuiText>
+      <EuiSpacer size="s" />
     <EuiBasicTable
       items={items}
       columns={columns}
@@ -219,5 +240,6 @@ const toggleDetails = (todo: Todo) => {
       }}
       onChange={onTableChange}
     />
+    </>
   );
 };
