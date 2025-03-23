@@ -8,7 +8,7 @@ import {
   EuiLoadingContent
 } from '@elastic/eui';
 import { Chart, Settings, Partition, BarSeries, Axis, ScaleType } from '@elastic/charts';
-import { useTodos } from '../../../hooks/useTodos';
+import { useStore } from '../../../store';
 import { useChartData } from '../../../hooks/useChartData';
 import { CoreStart } from '../../../../../../src/core/public';
 
@@ -17,7 +17,7 @@ interface TodoChartProps {
 }
 
 export const TodoChart: React.FC<TodoChartProps> = memo(({ http }) => {
-  const { todos, loading } = useTodos(http);
+  const { todos, loading } = useStore();
   const { statusStats, timelineData, tagStats } = useChartData(todos);
 
   if (loading) {

@@ -9,7 +9,8 @@ import {
 } from '@elastic/eui';
 import { TodoTable } from './TodoTable';
 import { TodoSearch } from '../TodoSearch';
-import { useTodos } from '../../../hooks/useTodos';
+// import { useTodos } from '../../../hooks/useTodos';
+import { useStore } from '../../../store';
 import { CoreStart } from '../../../../../../src/core/public';
 
 interface TodoListProps {
@@ -23,19 +24,20 @@ export const TodoList: React.FC<TodoListProps> = ({ http, notifications }) => {
     loading, 
     fetchTodos, 
     updateTodoStatus,
+    deleteTodo,
     searchTerm,
     setSearchTerm,
     selectedTags,
     setSelectedTags 
-  } = useTodos(http);
+  } = useStore();
 
   useEffect(() => {
-    fetchTodos();
-  }, [fetchTodos]);
+    fetchTodos(http);
+  }, [fetchTodos, http]);
 
-  const handleStatusChange = async (id: string, status: 'completed' | 'planned' | 'error') => {
+  const handleStatusChange = async (id: string, status: Todo['status']) => {
     try {
-      await updateTodoStatus(id, status);
+      await updateTodoStatus(http, id, status);
       notifications.toasts.addSuccess(`Todo status updated to ${status}`);
     } catch (error) {
       notifications.toasts.addError('Failed to update todo status');
@@ -44,10 +46,8 @@ export const TodoList: React.FC<TodoListProps> = ({ http, notifications }) => {
 
   const handleDelete = async (id: string) => {
     try {
-      await http.delete(`/api/todo_plugin/todos/${id}`);
+      await deleteTodo(http, id);
       notifications.toasts.addSuccess('Todo deleted successfully');
-      // Refresh the todo list
-      fetchTodos();
     } catch (error) {
       notifications.toasts.addError(error.body?.message || 'Failed to delete todo');
     }

@@ -11,7 +11,7 @@ import {
   EuiComboBox,
 } from '@elastic/eui';
 import { CoreStart } from '../../../../../../src/core/public';
-import { useTodos } from '../../../hooks/useTodos';
+import { useStore } from '../../../store';
 
 interface TodoFormProps {
   http: CoreStart['http'];
@@ -19,7 +19,7 @@ interface TodoFormProps {
 }
 
 export const TodoForm: React.FC<TodoFormProps> = ({ http, notifications }) => {
-  const { createTodo } = useTodos(http);
+  const { createTodo } = useStore();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [assignee, setAssignee] = useState('');
@@ -38,7 +38,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ http, notifications }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createTodo({
+      await createTodo(http, {
         title,
         description,
         assignee,
@@ -46,12 +46,12 @@ export const TodoForm: React.FC<TodoFormProps> = ({ http, notifications }) => {
         tags: selectedTags.map(tag => tag.label)
       });
       
-      // Reset form
+      // Move form reset after successful creation
       setTitle('');
       setDescription('');
       setAssignee('');
       setSelectedTags([]);
-      
+            
       notifications.toasts.addSuccess('Todo created successfully');
     } catch (error) {
       notifications.toasts.addError('Failed to create todo');
