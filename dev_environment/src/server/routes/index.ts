@@ -65,6 +65,9 @@ export function defineRoutes(router: IRouter) {
         return response.ok({
           body: {
             id: result.body._id,
+            ...request.body,
+            status: 'planned',
+            createdAt: new Date().toISOString(),
           },
         });
       } catch (error) {
