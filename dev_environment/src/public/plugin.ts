@@ -4,7 +4,7 @@ import {
   CustomPluginPluginSetup,
   CustomPluginPluginStart,
   AppPluginStartDependencies,
-} from './types';
+} from './types/types';
 import { PLUGIN_NAME } from '../common';
 
 export class CustomPluginPlugin

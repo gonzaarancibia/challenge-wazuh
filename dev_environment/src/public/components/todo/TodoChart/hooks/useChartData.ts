@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Todo } from './useTodos';
+import { Todo } from '../../../../types/types';
 
 export const useChartData = (todos: Todo[]) => {
     const statusStats = useMemo(() => {
