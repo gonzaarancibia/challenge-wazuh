@@ -18,7 +18,7 @@ import {
 import { CoreStart } from '../../../../src/core/public';
 import { NavigationPublicPluginStart } from '../../../../src/plugins/navigation/public';
 
-import { TodoList } from './todo/TodoList';
+import { TodoListContainer as TodoList } from './todo/TodoList';
 import { TodoFormContainer as TodoForm } from './todo/TodoForm';
 import { TodoChartContainer as TodoChart } from './todo/TodoChart';
 

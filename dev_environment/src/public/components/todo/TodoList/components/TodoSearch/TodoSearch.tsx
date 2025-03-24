@@ -5,14 +5,7 @@ import {
   EuiFlexItem,
   EuiComboBox,
 } from '@elastic/eui';
-
-interface TodoSearchProps {
-  searchTerm: string;
-  onSearch: (value: string) => void;
-  onTagFilter: (tags: string[]) => void;
-  selectedTags: string[];
-  isLoading?: boolean;
-}
+import { TodoSearchProps } from '../../../../../types/TodoList.types';
 
 export const TodoSearch: React.FC<TodoSearchProps> = ({
   searchTerm,
