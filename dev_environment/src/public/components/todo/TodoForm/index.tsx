@@ -43,10 +43,9 @@ export const TodoForm: React.FC<TodoFormProps> = ({ http, notifications }) => {
         description,
         assignee,
         status: 'planned',
-        tags: selectedTags.map(tag => tag.label)
+        tags: selectedTags.length > 0 ? [selectedTags[0].label] : []
       });
       
-      // Move form reset after successful creation
       setTitle('');
       setDescription('');
       setAssignee('');
@@ -86,17 +85,15 @@ export const TodoForm: React.FC<TodoFormProps> = ({ http, notifications }) => {
           />
         </EuiFormRow>
 
-        <EuiFormRow label="Tags">
+        <EuiFormRow label="Tag">
           <EuiComboBox
             selectedOptions={selectedTags}
-            onChange={setSelectedTags}
-            onCreateOption={(searchValue) => {
-              setSelectedTags([...selectedTags, { label: searchValue }]);
-            }}
+            onChange={(selected) => setSelectedTags(selected.slice(-1))} // Solo mantiene el último tag seleccionado
             options={predefinedTags}
             isClearable={true}
-            isCreatable={true}
-            placeholder="Select or create tags"
+            isCreatable={false} // Removemos la opción de crear tags
+            placeholder="Select a tag"
+            singleSelection={{ asPlainText: true }} // Fuerza selección única
           />
         </EuiFormRow>
 

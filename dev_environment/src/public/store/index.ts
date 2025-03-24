@@ -4,5 +4,5 @@ import { FilterSlice, createFilterSlice } from './slices/filterSlice';
 
 export const useStore = create<TodoSlice & FilterSlice>()((...args) => ({
     ...createTodoSlice(...args),
-    ...createFilterSlice(...args),
+    // ...createFilterSlice(...args),
 }));

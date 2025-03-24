@@ -1,1 +1,9 @@
 /* stylelint-disable no-empty-source */
+.custom-search {
+    width: 15vw;
+}
+@media (max-width: 575px) {
+    .custom-search {
+      width: 100%;
+    }
+  }

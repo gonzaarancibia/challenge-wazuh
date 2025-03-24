@@ -5,13 +5,12 @@ import {
   EuiSpacer,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiButton,
 } from '@elastic/eui';
 import { TodoTable } from './TodoTable';
 import { TodoSearch } from '../TodoSearch';
-// import { useTodos } from '../../../hooks/useTodos';
 import { useStore } from '../../../store';
 import { CoreStart } from '../../../../../../src/core/public';
+import { Todo } from '../../../types/todo';
 
 interface TodoListProps {
   http: CoreStart['http'];
@@ -20,7 +19,7 @@ interface TodoListProps {
 
 export const TodoList: React.FC<TodoListProps> = ({ http, notifications }) => {
   const { 
-    todos, 
+    filteredTodos,
     loading, 
     fetchTodos, 
     updateTodoStatus,
@@ -55,32 +54,25 @@ export const TodoList: React.FC<TodoListProps> = ({ http, notifications }) => {
 
   return (
     <EuiPanel>
-      <EuiFlexGroup alignItems="center" justifyContent="spaceBetween">
+      <EuiFlexGroup alignItems="baseline" justifyContent="spaceBetween">
         <EuiFlexItem>
           <EuiTitle size="s">
             <h2>Todo List</h2>
           </EuiTitle>
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
-          <EuiButton
-            onClick={() => fetchTodos()}
+          <TodoSearch
+            searchTerm={searchTerm}
+            onSearch={setSearchTerm}
+            onTagFilter={setSelectedTags}
+            selectedTags={selectedTags}
             isLoading={loading}
-            iconType="refresh"
-          >
-            Refresh
-          </EuiButton>
+          />
         </EuiFlexItem>
       </EuiFlexGroup>
       <EuiSpacer />
-      <TodoSearch 
-        searchTerm={searchTerm}
-        onSearch={setSearchTerm}
-        onTagFilter={setSelectedTags}
-        isLoading={loading}
-      />
-      <EuiSpacer />
       <TodoTable
-        todos={todos}
+        todos={filteredTodos}
         loading={loading}
         onStatusChange={handleStatusChange}
         onDelete={handleDelete}
