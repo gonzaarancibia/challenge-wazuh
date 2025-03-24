@@ -8,6 +8,7 @@ import {
 
 import { TodoPluginSetup, TodoPluginStart } from './types';
 import { defineRoutes } from './routes';
+import { OpenSearchService } from './services/opensearchService';
 
 export class TodoPlugin
   implements Plugin<TodoPluginSetup, TodoPluginStart> {
@@ -21,17 +22,14 @@ export class TodoPlugin
     this.logger.debug('todo_plugin: Setup');
 
     try {
-      // Check OpenSearch availability using ping
-      // const client = core.opensearch.client.asCurrentUser;
-      // await client.ping();
+      // Initialize OpenSearch service
+      const opensearchService = OpenSearchService.getInstance();
+      opensearchService.initialize(core);
 
       const router = core.http.createRouter();
 
       // Register server side APIs
       defineRoutes(router);
-
-      // Initialize OpenSearch index if it doesn't exist
-      // await this.initializeIndex(core);
 
       return {};
     } catch (error) {
@@ -39,38 +37,6 @@ export class TodoPlugin
       throw error;
     }
   }
-
-  // private async initializeIndex(core: CoreSetup) {
-  //   try {
-  //     const client = core.opensearch.legacy.client.;
-
-  //     const indexExists = await client.indices.exists({ index: 'todos' });
-
-  //     if (!indexExists.body) {
-  //       await client.indices.create({
-  //         index: 'todos',
-  //         body: {
-  //           mappings: {
-  //             properties: {
-  //               title: { type: 'text' },
-  //               status: { type: 'keyword' },
-  //               createdAt: { type: 'date' },
-  //               completedAt: { type: 'date' },
-  //               errorAt: { type: 'date' },
-  //               assignee: { type: 'keyword' },
-  //               description: { type: 'text' },
-  //               tags: { type: 'keyword' }
-  //             }
-  //           }
-  //         }
-  //       });
-  //       this.logger.debug('todo_plugin: Created todos index');
-  //     }
-  //   } catch (error) {
-  //     this.logger.error('Failed to initialize todos index:', error);
-  //     throw error; // Re-throw to ensure setup fails if index creation fails
-  //   }
-  // }
 
   public start(core: CoreStart) {
     this.logger.debug('todo_plugin: Started');
