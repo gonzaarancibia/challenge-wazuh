@@ -8,8 +8,15 @@ This plugin provides a task management system for security professionals using W
 - Search tasks by text or tags
 - Visualize tasks in tables and charts
 - Delete completed tasks
-<!-- ## Architecture
-The application follows an MVC (Model-View-Controller) architecture: -->
+
+## Screenshots
+Here are some screenshots of the application:
+
+![Todo List View](./screenshoots/home.png)
+*Todo List View - Main interface showing all tasks*
+
+![Task Analytics Dashboard](./screenshoots/footer.png)
+*Task Analytics Dashboard - Visualizing task status and completion metrics*
 
 ### Frontend
 - Built with ReactJS and OpenSearch Dashboards UI components
