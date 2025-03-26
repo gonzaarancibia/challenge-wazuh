@@ -1,9 +1,25 @@
 import React from 'react';
 import { Chart, Settings, Axis, LineSeries } from '@elastic/charts';
 import { TimelineData } from '../../../../../types/TodoChart.types';
+import { EuiText, EuiEmptyPrompt } from '@elastic/eui';
 
+export const TimelineChart: React.FC<{ data: TimelineData[] }> = ({ data }) => {
+  const hasData = data.length > 0 && data.some(item => item.created > 0 || item.completed > 0);
 
-export const TimelineChart: React.FC<{ data: TimelineData[] }> = ({ data }) => (
+  if (!hasData) {
+    return (
+      <>
+        <EuiEmptyPrompt
+          iconType="visualizeApp"
+          title={<h3>No data to display</h3>}
+          titleSize="xs"
+          body={<EuiText size="s">There is no timeline data available.</EuiText>}
+        />
+      </>
+    );
+  }
+
+  return (
     <Chart size={{ height: 280 }}>
       <Settings
         showLegend={true}
@@ -65,4 +81,5 @@ export const TimelineChart: React.FC<{ data: TimelineData[] }> = ({ data }) => (
       />
     </Chart>
   );
+};
   

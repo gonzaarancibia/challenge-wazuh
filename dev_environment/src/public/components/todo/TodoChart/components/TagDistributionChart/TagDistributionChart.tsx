@@ -1,8 +1,26 @@
 import React from 'react';
 import { Chart, Settings, BarSeries, Axis, ScaleType } from '@elastic/charts';
 import { TagStat } from '../../../../../types/TodoChart.types';
+import { EuiText, EuiEmptyPrompt } from '@elastic/eui';
 
-export const TagDistributionChart: React.FC<{ data: TagStat[] }> = ({ data }) => (
+export const TagDistributionChart: React.FC<{ data: TagStat[] }> = ({ data }) => {
+  // Check if there's no data or all counts are zero
+  const hasData = data.length > 0 && data.some(item => item.count > 0);
+
+  if (!hasData) {
+    return (
+      <div style={{ height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <EuiEmptyPrompt
+          iconType="visualizeApp"
+          title={<h3>No data to display</h3>}
+          titleSize="xs"
+          body={<EuiText size="s">There are no tags associated with your todos.</EuiText>}
+        />
+      </div>
+    );
+  }
+
+  return (
     <Chart size={{ height: 300 }}>
       <Settings
         rotation={90}
@@ -50,4 +68,5 @@ export const TagDistributionChart: React.FC<{ data: TagStat[] }> = ({ data }) =>
         }}
       />
     </Chart>
-);
+  );
+};
