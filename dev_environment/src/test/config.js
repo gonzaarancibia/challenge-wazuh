@@ -7,14 +7,27 @@ export default {
   roots: [
     '<rootDir>/public',
     '<rootDir>/server',
-    '<rootDir>/common',
   ],
   modulePaths: [
     `${kbnDir}/node_modules`
   ],
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
-    './!**/node_modules/**',
+    '!**/node_modules/**',
+    '!**/types/**',
+    '!**/*.d.ts',
+    '!**/index.ts',
+    '!**/types.ts',
+    '!**/*.types.ts',
+    '!**/cypress/**',
+    '!**/test/**',
+    '!**/mocks/**',
+    '!**/*.test.{js,jsx,ts,tsx}',
+    '!**/target/**',
+    '!**/common/**',
+    '!**/config.js',
+    '!**/jest.config.js',
+    '!**/cypress.config.js',
   ],
   moduleNameMapper: {
     '^ui/(.*)': `${kbnDir}/src/ui/public/$1`,
@@ -59,7 +72,7 @@ export default {
     '^.+\\.html?$': `${kbnDir}/src/dev/jest/babel_transform.js`,
   },
   transformIgnorePatterns: [
-    '[/\\\\]node_modules[/\\\\].+\\.js$',
+    // '[/\\\\]node_modules[/\\\\].+\\.js$',
   ],
   snapshotSerializers: [
     `${kbnDir}/node_modules/enzyme-to-json/serializer`,
