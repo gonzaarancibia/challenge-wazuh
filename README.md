@@ -9,12 +9,12 @@ Para una mejor comprensión del proyecto, he preparado dos videos demostrativos:
 ### Demo Funcional
 Este video muestra la aplicación en funcionamiento, destacando todas las características principales y casos de uso:
 
-[Ver Demo Funcional]([enlace-a-tu-video-de-demo](https://www.loom.com/share/d49f3233ab1e4bbfbc793a20a38ccf1e?sid=a3e0fff3-a127-4345-82e6-7c2671eab4d0))
+[Ver Demo Funcional](https://www.loom.com/share/d49f3233ab1e4bbfbc793a20a38ccf1e?sid=a3e0fff3-a127-4345-82e6-7c2671eab4d0)
 
 ### Explicación Técnica
 Este video profundiza en los aspectos técnicos del proyecto, explicando la arquitectura, patrones de diseño y decisiones de implementación:
 
-[Ver Explicación Técnica]([enlace-a-tu-video-tecnico](https://www.loom.com/share/2acb419015ec4407b26fbe56d5948bf9))
+[Ver Explicación Técnica](https://www.loom.com/share/2acb419015ec4407b26fbe56d5948bf9)
 
 ## ✨ Features
 - Create new tasks with title, status, assignee, description, and tags
