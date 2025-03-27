@@ -4,17 +4,16 @@ This plugin provides a task management system for security professionals using W
 
 ## 🎬 Demo Videos
 
-Para una mejor comprensión del proyecto, he preparado dos videos demostrativos:
+For a better understanding of the project, I have prepared two demonstration videos:
 
-### Demo Funcional
-Este video muestra la aplicación en funcionamiento, destacando todas las características principales y casos de uso:
+### Functional Demo
+This video shows the application in operation, highlighting all the main features and use cases:
+[Watch Functional Demo](https://www.loom.com/share/d49f3233ab1e4bbfbc793a20a38ccf1e?sid=a3e0fff3-a127-4345-82e6-7c2671eab4d0)
 
-[Ver Demo Funcional](https://www.loom.com/share/d49f3233ab1e4bbfbc793a20a38ccf1e?sid=a3e0fff3-a127-4345-82e6-7c2671eab4d0)
+### Technical Explanation
+This video delves into the technical aspects of the project, explaining the architecture, design patterns, and implementation decisions:
 
-### Explicación Técnica
-Este video profundiza en los aspectos técnicos del proyecto, explicando la arquitectura, patrones de diseño y decisiones de implementación:
-
-[Ver Explicación Técnica](https://www.loom.com/share/2acb419015ec4407b26fbe56d5948bf9)
+[Watch Technical Explanation](https://www.loom.com/share/2acb419015ec4407b26fbe56d5948bf9)
 
 ## ✨ Features
 - Create new tasks with title, status, assignee, description, and tags
